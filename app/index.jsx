@@ -10,12 +10,14 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { TodoProvider } from './todoApp/TodoConext';
 
 import ListDetail from './listDetail/ListDetail';
 import Counter from './Counter';
-import TodoApp from './TodoApp';
+import TodoApp from './todoApp/TodoApp';
 import FormWithValidation from './FormWithValidation';
 import PullToRefresh from './PullToRefresh';
+import SearchableList from './SearchList';
 
 export default function App() {
   const [selected, setSelected] = useState(null);
@@ -28,6 +30,7 @@ export default function App() {
     { label: 'Todo App', value: 'TodoApp' },
     { label: 'Form with Validation', value: 'FormWithValidation' },
     { label: 'Pull to Refresh', value: 'PullToRefresh' },
+    { label: 'SearchableList', value: 'SearchableList' },
   ];
 
   useEffect(() => {
@@ -52,11 +55,17 @@ export default function App() {
       case 'Counter':
         return <Counter />;
       case 'TodoApp':
-        return <TodoApp />;
+        return (
+          <TodoProvider>
+            <TodoApp />
+          </TodoProvider>
+        );
       case 'FormWithValidation':
         return <FormWithValidation />;
       case 'PullToRefresh':
         return <PullToRefresh />;
+      case 'SearchableList':
+        return <SearchableList />;
       default:
         return <Text>Select a component</Text>;
     }
